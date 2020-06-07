@@ -23,11 +23,13 @@ class Company(models.Model):
     name = models.CharField(max_length=256, blank=True, null=True)
     address = models.CharField(max_length=512, blank=True, null=True)
     post_index = models.CharField(max_length=64, blank=True, null=True)
-    actions = models.ManyToManyField(Activity, through='CompanyActivities')
+    activities = models.ManyToManyField(Activity, through='CompanyActivities')
 
     class Meta:
         managed = True
         db_table = 'company'
+        verbose_name = 'Компания'
+        verbose_name_plural = 'Компании'
 
 
 class CompanyActivities(models.Model):
