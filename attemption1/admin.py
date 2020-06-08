@@ -1,15 +1,21 @@
 from django.contrib import admin
-from .models import Activity, Product, Company, CompanyActivities
-
-admin.site.register(Activity)
-# admin.site.register(Product)
-# admin.site.register(Company)
+from .models import Activity, Product, Company
 
 
-class CompanyActivitiesInline(admin.TabularInline):
-    model = CompanyActivities
-    raw_id_fields = ('activity_id',)
-    extra = 1
+# class CompanyActivitiesInline(admin.TabularInline):
+#     model = Company.activities.through
+#     autocomplete_fields = ('activity',)
+#     list_filter = ('is_main_activity',)
+#     extra = 1
+
+
+@admin.register(Activity)
+class ActivityAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'okved2')
+    search_fields = ('name', 'okved2',)
+    ordering = ('id',)
+
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -21,13 +27,16 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    # filter_horizontal = ('activities',)
     list_display = ('id', 'name', 'post_index', 'address', 'get_activities')
     search_fields = ('name', 'post_index', 'address',)
+    filter_horizontal = ('activities',)
+    # autocomplete_fields = ('activities',)
     # date_hierarchy = 'created'
     # prepopulated_fields = {'slug': ('title',)} # поле slug не требуется вводить, оно заполняется автоматически значением поля title
     # raw_id_fields = ('author',) # foreign_key при редактировании объекта будет поле для поиска а не дропдаун лист
-    inlines = [CompanyActivitiesInline]
+    # inlines = [CompanyActivitiesInline]
 
     def get_activities(self, obj):
         return "\n".join([a.okved2+', ' for a in obj.activities.all()])
+
+

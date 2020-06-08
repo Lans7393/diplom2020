@@ -5,9 +5,15 @@ class Activity(models.Model):
     okved2 = models.CharField(max_length=12, blank=True, null=True)
     name = models.CharField(max_length=512)
 
+    def __str__(self):
+        return self.okved2 + ' ' + self.name
+
+
     class Meta:
         managed = True
         db_table = 'activity'
+        verbose_name = 'Вид деятельности'
+        verbose_name_plural = 'Виды деятельности'
 
 
 class Product(models.Model):
@@ -23,21 +29,10 @@ class Company(models.Model):
     name = models.CharField(max_length=256, blank=True, null=True)
     address = models.CharField(max_length=512, blank=True, null=True)
     post_index = models.CharField(max_length=64, blank=True, null=True)
-    activities = models.ManyToManyField(Activity, through='CompanyActivities')
+    activities = models.ManyToManyField(Activity, related_name='companies')
 
     class Meta:
         managed = True
         db_table = 'company'
         verbose_name = 'Компания'
         verbose_name_plural = 'Компании'
-
-
-class CompanyActivities(models.Model):
-    company = models.ForeignKey('Company', models.DO_NOTHING)
-    activity = models.ForeignKey('Activity', models.DO_NOTHING)
-    is_main_activity = models.BooleanField(default=False)
-
-    class Meta:
-        managed = True
-        db_table = 'company_activities'
-        unique_together = (('company', 'activity'),)
