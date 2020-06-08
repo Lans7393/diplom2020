@@ -27,8 +27,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'post_index', 'address', 'get_activities')
-    search_fields = ('name', 'post_index', 'address',)
+    list_display = ('id', 'name', 'postal_code', 'address', 'get_activities')
+    search_fields = ('name', 'postal_code', 'address',)
     filter_horizontal = ('activities',)
     # autocomplete_fields = ('activities',)
     # date_hierarchy = 'created'

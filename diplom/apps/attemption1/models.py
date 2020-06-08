@@ -29,9 +29,13 @@ class Product(models.Model):
 
 class Company(models.Model):
     name = models.CharField('Название', max_length=256, blank=True, null=True)
+    short_name = models.CharField('Короткое название', max_length=64, blank=True, null=True)
     address = models.CharField('Адрес', max_length=512, blank=True, null=True)
-    post_index = models.CharField('Почтовый индех', max_length=64, blank=True, null=True)
-    activities = models.ManyToManyField(Activity, related_name='companies', blank=False, null=True)
+    postal_code = models.CharField('Почтовый индех', max_length=64, blank=True, null=True)
+    activities = models.ManyToManyField(Activity, related_name='companies')
+
+    def __str__(self):
+        return self.short_name
 
     class Meta:
         managed = True
