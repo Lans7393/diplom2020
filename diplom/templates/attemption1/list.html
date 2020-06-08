@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Новые компании{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+    {%  if companies_list  %}
+
+        {% for c in companies_list %}
+        <a href="{% url 'attemption1:detail' c.id %}">{{c.name}}</a>
+        {% endfor %}
+
+    {% else %}
+        Компании не найдены
+    {% endif %}
+
+{% endblock %}

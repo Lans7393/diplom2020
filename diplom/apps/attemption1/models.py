@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Activity(models.Model):
-    okved2 = models.CharField('ОКВЕД2', max_length=12, blank=True, null=True)
+    okved2 = models.CharField('ОКВЭД2', max_length=12, blank=True, null=True)
     name = models.CharField('Наименование', max_length=512)
 
     def __str__(self):
@@ -30,9 +30,13 @@ class Product(models.Model):
 class Company(models.Model):
     name = models.CharField('Название', max_length=256, blank=True, null=True)
     short_name = models.CharField('Короткое название', max_length=64, blank=True, null=True)
+    inn = models.CharField('ИНН', max_length=12, blank=True, null=True)
     address = models.CharField('Адрес', max_length=512, blank=True, null=True)
     postal_code = models.CharField('Почтовый индех', max_length=64, blank=True, null=True)
-    activities = models.ManyToManyField(Activity, related_name='companies')
+    activities = models.ManyToManyField(Activity, related_name='companies', blank=True)
+
+    list_org_link = models.URLField('Ссылка на list-org.com', null=True, blank=True)
+    site = models.URLField('Сайт компании', null=True, blank=True)
 
     def __str__(self):
         return self.short_name

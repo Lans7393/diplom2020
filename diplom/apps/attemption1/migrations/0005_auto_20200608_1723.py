@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='activity',
             name='okved2',
-            field=models.CharField(blank=True, max_length=12, null=True, verbose_name='ОКВЕД2'),
+            field=models.CharField(blank=True, max_length=12, null=True, verbose_name='ОКВЭД2'),
         ),
         migrations.AlterField(
             model_name='company',

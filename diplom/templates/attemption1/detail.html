@@ -1,0 +1,36 @@
+dummy
+{#{% extends 'base.html' %}#}
+{#{% block title %}{{ company.short_name }}{% endblock %}#}
+{##}
+{#{% block content %}#}
+{##}
+{#    <h2>{{ company.name }}</h2>#}
+{#    <p>{{ company.postal_code }}</p>#}
+{#    <p>{{ company.address }}</p>#}
+{##}
+{#    <hr>#}
+{##}
+{#    {% if activities %}#}
+{#        {% for a in activities %}#}
+{#            <p>#}
+{#                <strong>{{a.okved2}} {{a.name}}</strong>#}
+{#            </p>#}
+{#        {% endfor %}#}
+{#    {% else %}#}
+{#        Виды деятельности не указаны!#}
+{#    {% endif %}#}
+{##}
+{#    <hr>#}
+{##}
+{#    <form action="{% url 'attemption1:add_activity' company.id %}" method="POST"></form>#}
+{##}
+{#        {% csrf_token %}#}
+{##}
+{#        <input type="text" required placeholder="Наименование" name="name"><br>#}
+{#        <input type="text" placeholder="Код ОКВЭД2" name="okved2"><br>#}
+{##}
+{#    <button type="submit">Добавить вид деятельности</button>#}
+{##}
+{#    </form>#}
+{##}
+{#{% endblock %}#}
