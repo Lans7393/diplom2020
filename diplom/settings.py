@@ -31,13 +31,14 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'diplom.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'attemption1.apps.Attemption1Config',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'attemption1',
 ]
 
 MIDDLEWARE = [
@@ -127,4 +128,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

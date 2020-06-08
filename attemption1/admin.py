@@ -37,6 +37,7 @@ class CompanyAdmin(admin.ModelAdmin):
     # inlines = [CompanyActivitiesInline]
 
     def get_activities(self, obj):
-        return "\n".join([a.okved2+', ' for a in obj.activities.all()])
+        activities_str = ("\n".join([a.okved2+', ' for a in obj.activities.all()]))
+        return activities_str[:-2]
 
 

@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Activity(models.Model):
-    okved2 = models.CharField(max_length=12, blank=True, null=True)
-    name = models.CharField(max_length=512)
+    okved2 = models.CharField('ОКВЕД2', max_length=12, blank=True, null=True)
+    name = models.CharField('Наименование', max_length=512)
 
     def __str__(self):
         return self.okved2 + ' ' + self.name
@@ -17,19 +17,21 @@ class Activity(models.Model):
 
 
 class Product(models.Model):
-    okpd2 = models.CharField(unique=True, max_length=12, blank=True, null=True)
-    name = models.CharField(max_length=512, blank=True, null=True)
+    okpd2 = models.CharField('ОКПД2', unique=True, max_length=12, blank=True, null=True)
+    name = models.CharField('Наименование', max_length=512, blank=True, null=True)
 
     class Meta:
         managed = True
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
         db_table = 'product'
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=256, blank=True, null=True)
-    address = models.CharField(max_length=512, blank=True, null=True)
-    post_index = models.CharField(max_length=64, blank=True, null=True)
-    activities = models.ManyToManyField(Activity, related_name='companies')
+    name = models.CharField('Название', max_length=256, blank=True, null=True)
+    address = models.CharField('Адрес', max_length=512, blank=True, null=True)
+    post_index = models.CharField('Почтовый индех', max_length=64, blank=True, null=True)
+    activities = models.ManyToManyField(Activity, related_name='companies', blank=False, null=True)
 
     class Meta:
         managed = True
