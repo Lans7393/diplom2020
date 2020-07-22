@@ -1,6 +1,5 @@
 .idea/
-diplom/apps/attemption1/migrations/__pycache__/
-diplom/__pycache__/
-diplom/apps/attemption1/__pycache__/
+.venv/
+.vscode/
 __pycache__/
 static/
