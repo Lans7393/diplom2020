@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attemption1', '0007_auto_20200608_1753'),
+        ('main', '0007_auto_20200608_1753'),
     ]
 
     operations = [
@@ -23,6 +23,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='company',
             name='activities',
-            field=models.ManyToManyField(blank=True, related_name='companies', to='attemption1.Activity'),
+            field=models.ManyToManyField(blank=True, related_name='companies', to='main.Activity'),
         ),
     ]

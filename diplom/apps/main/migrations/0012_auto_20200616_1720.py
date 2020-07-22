@@ -8,7 +8,7 @@ import phone_field.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attemption1', '0011_company_main_activity'),
+        ('main', '0011_company_main_activity'),
     ]
 
     operations = [
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('site', models.URLField(blank=True, help_text='Сайт', verbose_name='Сайт')),
                 ('comment', models.CharField(blank=True, max_length=256, null=True, verbose_name='Комментарий')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company')),
             ],
             options={
                 'verbose_name': 'Сайт',
@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('phone', phone_field.models.PhoneField(blank=True, help_text='Номер телефона', max_length=31, verbose_name='Телефон')),
                 ('comment', models.CharField(blank=True, max_length=256, null=True, verbose_name='Комментарий')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company')),
             ],
             options={
                 'verbose_name': 'Телефон',
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fax', phone_field.models.PhoneField(blank=True, help_text='Номер факса', max_length=31, verbose_name='Факс')),
                 ('comment', models.CharField(blank=True, max_length=256, null=True, verbose_name='Комментарий')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company')),
             ],
             options={
                 'verbose_name': 'Факс',
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('email', models.EmailField(blank=True, help_text='E-mail', max_length=254, verbose_name='E-mail')),
                 ('comment', models.CharField(blank=True, max_length=256, null=True, verbose_name='Комментарий')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company')),
             ],
             options={
                 'verbose_name': 'E-mail',

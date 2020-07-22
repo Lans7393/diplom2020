@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'diplom.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'diplom.apps.attemption1.apps.Attemption1Config',
+    'diplom.apps.main.apps.mainConfig',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',

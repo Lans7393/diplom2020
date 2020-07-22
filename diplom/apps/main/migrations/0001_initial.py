@@ -54,8 +54,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_main_activity', models.BooleanField(default=False)),
-                ('activity', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Activity')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company')),
+                ('activity', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='main.Activity')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company')),
             ],
             options={
                 'db_table': 'company_activities',
@@ -66,6 +66,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='company',
             name='actions',
-            field=models.ManyToManyField(through='attemption1.CompanyActivities', to='attemption1.Activity'),
+            field=models.ManyToManyField(through='main.CompanyActivities', to='main.Activity'),
         ),
     ]

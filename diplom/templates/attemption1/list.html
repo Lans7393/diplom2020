@@ -6,7 +6,7 @@
     {%  if companies_list  %}
 
         {% for c in companies_list %}
-        <a href="{% url 'attemption1:detail' c.id %}">{{c.name}}</a>
+        <a href="{% url 'main:detail' c.id %}">{{c.name}}</a>
         {% endfor %}
 
     {% else %}

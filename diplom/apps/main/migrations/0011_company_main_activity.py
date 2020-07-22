@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attemption1', '0010_company_site'),
+        ('main', '0010_company_site'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='company',
             name='main_activity',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Activity'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Activity'),
         ),
     ]

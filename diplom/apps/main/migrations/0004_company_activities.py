@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attemption1', '0003_auto_20200607_2354'),
+        ('main', '0003_auto_20200607_2354'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='company',
             name='activities',
-            field=models.ManyToManyField(related_name='companies', to='attemption1.Activity'),
+            field=models.ManyToManyField(related_name='companies', to='main.Activity'),
         ),
     ]

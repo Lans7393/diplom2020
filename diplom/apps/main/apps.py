@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class Attemption1Config(AppConfig):
-    name = 'diplom.apps.attemption1'
+class mainConfig(AppConfig):
+    name = 'diplom.apps.main'
     verbose_name = 'Диплом 2020'

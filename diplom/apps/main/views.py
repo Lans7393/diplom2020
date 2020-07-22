@@ -8,7 +8,7 @@ from .models import Company
 
 def index(request):
     companies_list = Company.objects.order_by('-id')[:10]
-    return render(request, 'attemption1/list.html', {'companies_list': companies_list})
+    return render(request, 'main/list.html', {'companies_list': companies_list})
 
 
 def detail(request, company_id):
@@ -19,7 +19,7 @@ def detail(request, company_id):
 
     # activities = c.activity_set.order_by('okved2')
 
-    return render(request, 'attemption1/detail.html', {'company': c}) # 'activities':activities})
+    return render(request, 'main/detail.html', {'company': c}) # 'activities':activities})
 
 
 def add_activity(request, company_id):
@@ -31,4 +31,4 @@ def add_activity(request, company_id):
     # c.activity_set.create(mname=request.POST['name'], okved2=request.POST['okved2'])
 
 
-    return HttpResponseRedirect(reverse('attemption1:detail', args=(c.id)))
+    return HttpResponseRedirect(reverse('main:detail', args=(c.id)))

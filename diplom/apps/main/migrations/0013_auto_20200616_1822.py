@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attemption1', '0012_auto_20200616_1720'),
+        ('main', '0012_auto_20200616_1720'),
     ]
 
     operations = [
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='address',
             name='company',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company'),
         ),
         migrations.AddField(
             model_name='address',
@@ -91,22 +91,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='email',
             name='company',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company'),
         ),
         migrations.AlterField(
             model_name='fax',
             name='company',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company'),
         ),
         migrations.AlterField(
             model_name='phone',
             name='company',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company'),
         ),
         migrations.AlterField(
             model_name='site',
             name='company',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Company'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Company'),
         ),
         migrations.AlterModelTable(
             name='okpd',
@@ -118,11 +118,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='company',
             name='main_okved',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='attemption1.Okved'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='main.Okved'),
         ),
         migrations.AddField(
             model_name='company',
             name='sup_okveds',
-            field=models.ManyToManyField(blank=True, related_name='companies', to='attemption1.Okved'),
+            field=models.ManyToManyField(blank=True, related_name='companies', to='main.Okved'),
         ),
     ]
