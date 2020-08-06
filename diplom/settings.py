@@ -18,6 +18,32 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'handlers':{
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler'
+            'filename': os.path.join(PROJECT_ROOT,'logs','log.log')
+        },
+        'lop_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler'
+            'filename': os.path.join(PROJECT_ROOT,'logs','list_org_parser.log')
+        },
+    },
+
+    'loggers': {
+        'list_org_parser': {
+            'handlers':['lop_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    }
+}
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -81,10 +107,6 @@ WSGI_APPLICATION = 'diplom.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'diplom_db',
@@ -135,3 +157,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
