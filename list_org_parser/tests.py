@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from list_org_parser.services.list_org_parser import ListOrgParser
 from list_org_parser.services.save_orgs_command import save
 from list_org_parser.models import Organization
+from list_org_parser.models import Address, Phone, Fax, Email, Site
+from classifiers.services.init_load import load_okved2, load_okved2007
 
 
 class ListOrgParserTestCase(TestCase):
@@ -67,8 +69,8 @@ class ListOrgParserTestCase(TestCase):
         'okato': '73401365',
         'main_okved2007': None,
         'main_okved2': '10.71',
-        'sup_okved2': None,
-        'sup_okved2007': [
+        'sup_okveds2': [],
+        'sup_okveds2007': [
             '10.13.1', '10.13.2',
             '10.13.3', '10.13.4',
             '10.13.5', '10.13.6',
@@ -126,6 +128,9 @@ class ListOrgParserTestCase(TestCase):
         self.org_page = open(self.ORG_PAGE_PATH, encoding='utf-8', mode='r').read()
         self.orgs_list_page = open(self.ORGS_LIST_PAGE_PATH, encoding='utf-8', mode='r').read()
 
+    def _init_classifiers(self):
+        load_okved2()
+        load_okved2007()
 
     def setUp(self):
         try:
@@ -133,6 +138,7 @@ class ListOrgParserTestCase(TestCase):
         except FileNotFoundError:
             self._update_test_files()
             self._init_pages()
+        self._init_classifiers()
 
 
     def test_total_orgs_count_parser(self):
@@ -155,4 +161,34 @@ class ListOrgParserTestCase(TestCase):
     def test_save(self):
         org = save(self.ORG_DICT)
         org_from_db = Organization.objects.get(name=self.ORG_DICT['name'])
-        self.assertEqual(self.ORG_DICT['inn'], org_from_db.inn)
+        self.assertEqual(org, org_from_db)
+        self.assertEqual(self.ORG_DICT['name'], org.name)
+        self.assertEqual(self.ORG_DICT['postal_code'], org.postal_code)
+
+        address = Address.objects.get(organization=org, is_legal=False)
+        self.assertEqual(self.ORG_DICT['address'], address.address)
+        self.assertEqual(self.ORG_DICT['gps_coordinates'], {'longitude': address.gps_longitude, 'latitude': address.gps_latitude})
+        self.assertEqual(self.ORG_DICT['ur_address'], Address.objects.get(organization=org, is_legal=True).address)
+
+        self.assertEqual(self.ORG_DICT['phones'], list(Phone.objects.filter(organization=org).values_list('phone', flat=True)))
+        self.assertEqual(self.ORG_DICT['faxes'], list(Fax.objects.filter(organization=org).values_list('fax', flat=True)))
+        self.assertEqual(self.ORG_DICT['emails'], list(Email.objects.filter(organization=org).values_list('email', flat=True)))
+        self.assertEqual(self.ORG_DICT['sites'], list(Site.objects.filter(organization=org).values_list('site', flat=True)))
+
+        self.assertEqual(self.ORG_DICT['inn'], org.inn)
+        self.assertEqual(self.ORG_DICT['kpp'], org.kpp)
+        self.assertEqual(self.ORG_DICT['okpo'], org.okpo)
+        self.assertEqual(self.ORG_DICT['ogrn'], org.ogrn)
+        self.assertEqual(self.ORG_DICT['okfs'], org.okfs)
+        self.assertEqual(self.ORG_DICT['okogu'], org.okogu)
+        self.assertEqual(self.ORG_DICT['oktmo'], org.oktmo)
+        self.assertEqual(self.ORG_DICT['okato'], org.okato)
+
+        self.assertEqual(self.ORG_DICT['main_okved2007'], org.main_okved2007.code if org.main_okved2007 else None)
+        self.assertEqual(self.ORG_DICT['sup_okveds2'], [okved2007.code for okved2007 in org.sup_okveds2007.all()])
+
+        self.assertEqual(self.ORG_DICT['main_okved2'], org.main_okved2.code if org.main_okved2 else None)
+        self.assertEqual(set(self.ORG_DICT['sup_okveds2007']), set([okved2.code for okved2 in org.sup_okveds2.all()]))
+        
+        
+        

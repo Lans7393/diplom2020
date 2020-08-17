@@ -234,8 +234,8 @@ class ListOrgParser:
 
     def _parse_sup_activities(self, activities_div) -> dict:
         sup_activities = {
-            'okved2': None,
-            'okved': None
+            'okved2': [],
+            'okved': []
         }
 
         activities_table = activities_div.find('table', class_='tt')
@@ -261,8 +261,8 @@ class ListOrgParser:
         return {
             'main_okved2': main_activity['okved2'],
             'main_okved2007': main_activity['okved'],
-            'sup_okved2': sup_activities['okved2'],
-            'sup_okved2007': sup_activities['okved'],
+            'sup_okveds2': sup_activities['okved2'],
+            'sup_okveds2007': sup_activities['okved'],
         }
 
 
@@ -334,8 +334,8 @@ class ListOrgParser:
             # Виды деятельности
             'main_okved2007': activities_div_info['main_okved2007'],
             'main_okved2': activities_div_info['main_okved2'],
-            'sup_okved2': activities_div_info['sup_okved2'],
-            'sup_okved2007': activities_div_info['sup_okved2007'],
+            'sup_okveds2': activities_div_info['sup_okveds2'],
+            'sup_okveds2007': activities_div_info['sup_okveds2007'],
         }
 
     def parse_orgs_pages(self, orgs_urls: list, only_active_orgs=False):

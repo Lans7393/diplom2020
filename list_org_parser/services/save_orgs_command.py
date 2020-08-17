@@ -5,6 +5,7 @@ from bulk_sync import bulk_sync
 from list_org_parser.services.list_org_parser import ListOrgParser
 from list_org_parser.models import OrganizationUrl, Organization
 from list_org_parser.models import Address, Phone, Fax, Email, Site
+from classifiers.models import Okved2, Okved2007, Okpd2
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,7 @@ def save_orgs():
 
 
 def save(org: dict):
+    org = org.copy()
     address = org.pop('address')
     gps_coordinates = org.pop('gps_coordinates')
     ur_address = org.pop('ur_address')
@@ -50,17 +52,60 @@ def save(org: dict):
     emails = org.pop('emails')
     sites = org.pop('sites')
 
-    main_okved2007 = org.pop('main_okved2007')
-    sup_okved2007 = org.pop('sup_okved2007')
+    main_okved2007 = org['main_okved2007']
+    if(main_okved2007):
+        try:
+            org['main_okved2007'] = Okved2007.objects.get(code=main_okved2007)
+        except Okved2007.DoesNotExist:
+            # TODO надо что-то с этим делать
+            if not org['main_okved2']:
+                org['main_okved2'] = org['main_okved2007']
+            org['main_okved2007'] = None
+            logger.error(f'Can\'t find code {main_okved2007} in OKVED 2007 when try to save organization {org}')
 
-    main_okved2 = org.pop('main_okved2')
-    sup_okved2007 = org.pop('sup_okved2')
+    sup_okveds2007 = org.pop('sup_okveds2007')
+    if(sup_okveds2007):
+        okveds = []
+        for okved in sup_okveds2007:
+            try:
+                okveds.append(Okved2007.objects.get(code=okved))
+            except Okved2007.DoesNotExist:
+                if not org['sup_okveds2']:
+                    org['sup_okveds2'] = []
+                org['sup_okveds2'].append(okved)
+                logger.error(f'Can\'t find code {okved} in OKVED 2007 when try to save organization {org}')
+        sup_okveds2007 = okveds
 
-    org = Organization(**org).save()
+
+    main_okved2 = org['main_okved2']
+    if(main_okved2):
+        try:
+            org['main_okved2'] = Okved2.objects.get(code=main_okved2)
+        except Okved2.DoesNotExist:
+            org['main_okved2'] = None
+            logger.error(f'Can\'t find code {main_okved2} in OKVED 2 when try to save organization {org}')
+
+    sup_okveds2 = org.pop('sup_okveds2')
+    if(sup_okveds2):
+        okveds = []
+        for okved in sup_okveds2:
+            try:
+                okveds.append(Okved2.objects.get(code=okved))
+            except Okved2.DoesNotExist:
+                logger.error(f'Can\'t find code {okved} in OKVED 2 when try to save organization {org}')
+        sup_okveds2 = okveds
+
+
+    org = Organization(**org)
+    org.save()
+    if sup_okveds2007:
+        org.sup_okveds2007.add(*sup_okveds2007)
+    if sup_okveds2:
+        org.sup_okveds2.add(*sup_okveds2)
 
     # Сохраняем адресс и юридический адресс с gps координатами (если заданы) 
     longitude = gps_coordinates['longitude'] if gps_coordinates['longitude'] else None
-    latitude = gps_coordinates['longitude'] if gps_coordinates['longitude'] else None
+    latitude = gps_coordinates['latitude'] if gps_coordinates['latitude'] else None
     if address:
         address = Address(organization=org, address=address, gps_longitude=longitude, gps_latitude=latitude)
         address.save()
@@ -88,5 +133,7 @@ def save(org: dict):
 
     # Сохраняем сыллки на сайты организации
     sites = [Site(organization=org, site=site) for site in sites]
+    for site in sites:
+        site.save()
 
     return org   
